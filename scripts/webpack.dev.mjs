@@ -1,7 +1,8 @@
 import path from 'path'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import { merge } from 'webpack-merge'
-import { DIST_PATH, getAssetsLoader, getCssLoader, PUBLIC_PATH, ROOT_PATH } from './common.mjs'
+import { DIST_PATH, PUBLIC_PATH, ROOT_PATH } from './config.mjs'
+import { getAssetsLoader, getCssLoader, getTsxLoader } from './webpack.common.mjs'
 
 const MODE = 'development'
 process.env.NODE_ENV = MODE
@@ -12,27 +13,34 @@ process.env.NODE_ENV = MODE
 const config = merge({
     mode: MODE,
     devtool: 'eval-cheap-module-source-map',
-    entry: path.join(ROOT_PATH, 'src', 'main.tsx'),
+    entry: {
+        main: path.join(ROOT_PATH, 'src', 'main.tsx')
+    },
     target: ['web', 'es2020'],
     stats: 'errors-warnings',
     module: {
         rules: [
             ...getCssLoader(),
             ...getAssetsLoader(),
-            {
-                test: /\.tsx$/i,
-                exclude: /(node_modules|bower_components)/i,
-                use: {
-                    loader: 'swc-loader'
-                }
-            }
+            getTsxLoader(),
         ]
+    },
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                commons: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendors',
+                    chunks: 'all',
+                },
+            },
+        },
     },
     plugins: [
         new HtmlWebpackPlugin({
             title: 'WebpackSwcTemplate',
             template: path.join(PUBLIC_PATH, 'index.html')
-        })
+        }),
     ],
     output: {
         filename: 'webpack/js/[name].bundle.js',

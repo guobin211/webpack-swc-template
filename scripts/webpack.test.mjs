@@ -8,36 +8,19 @@ import { DIST_PATH } from './config.mjs'
 const MODE = 'production'
 process.env.NODE_ENV = MODE
 
-const prodConfig = merge(devConfig, {
-    devtool: false,
+const testConfig = merge(devConfig, {
     mode: MODE,
     target: ['web', 'es5'],
     stats: 'errors-warnings',
+    devtool: false,
     output: {
         filename: 'webpack/js/[name].[contenthash].js',
+        sourceMapFilename: "webpack/js/[name].map",
         path: DIST_PATH,
         clean: true,
         publicPath: '/'
     },
-    performance: {
-        maxEntrypointSize: 300000,
-    },
     optimization: {
-        splitChunks: {
-            cacheGroups: {
-                commons: {
-                    test: /[\\/]node_modules[\\/](react|react-dom|react-router-dom|redux|react-redux)[\\/]/,
-                    name: 'commons',
-                    chunks: 'all',
-                },
-                vendor: {
-                    test: /[\\/]node_modules[\\/]/,
-                    name: 'vendor',
-                    chunks: 'all',
-                },
-            },
-        },
-        runtimeChunk: 'single',
         minimizer: [
             new CssMinimizerPlugin()
         ]
@@ -58,4 +41,4 @@ const prodConfig = merge(devConfig, {
     devServer: {}
 })
 
-export default prodConfig
+export default testConfig

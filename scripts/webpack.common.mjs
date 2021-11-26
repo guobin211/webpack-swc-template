@@ -1,12 +1,5 @@
-import path from 'path'
-import { fileURLToPath } from 'url'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import json5 from 'json5'
-
-const current = path.dirname(fileURLToPath(import.meta.url))
-export const ROOT_PATH = path.resolve(current, '../')
-export const DIST_PATH = path.join(ROOT_PATH, 'dist')
-export const PUBLIC_PATH = path.join(ROOT_PATH, 'public')
 
 export function getCssLoader(mode = 'development') {
     if (mode === 'production') {
@@ -51,4 +44,14 @@ export function getAssetsLoader() {
             }
         }
     ]
+}
+
+export function getTsxLoader() {
+    return {
+        test: /\.(js|jsx|ts|tsx)$/,
+        exclude: /(node_modules|bower_components)/i,
+        use: {
+            loader: 'swc-loader',
+        }
+    }
 }
