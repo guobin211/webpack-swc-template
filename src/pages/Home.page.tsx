@@ -1,5 +1,6 @@
 import React from 'react'
 import { useCount } from '../hooks/useCount'
+import { Button } from 'antd'
 
 export default function HomePage() {
 
@@ -7,13 +8,12 @@ export default function HomePage() {
 
     return (
         <div>
-            home page
+            <h1>HomePage</h1>
             <br/>
             count : {count}
-
             <div>
-                <button type="button" onClick={() => increment()}>increment</button>
-                <button type="button" onClick={() => decrement()}>decrement</button>
+                <Button type="default" onClick={() => increment()}>increment</Button>
+                <Button type="primary" onClick={() => decrement()}>decrement</Button>
             </div>
 
         </div>

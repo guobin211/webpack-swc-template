@@ -28,13 +28,14 @@ const config = merge({
     optimization: {
         splitChunks: {
             cacheGroups: {
-                commons: {
+                vendor: {
                     test: /[\\/]node_modules[\\/]/,
-                    name: 'vendors',
+                    name: 'vendor',
                     chunks: 'all',
                 },
             },
         },
+        runtimeChunk: 'single',
     },
     plugins: [
         new HtmlWebpackPlugin({

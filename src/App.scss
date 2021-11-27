@@ -1,3 +1,5 @@
+@import '../node_modules/antd/dist/antd.css';
+
 html {
   font-size: 16px;
 }
@@ -5,38 +7,4 @@ html {
 body {
   margin: 0;
   padding: 0;
-}
-
-.flex-row {
-  display: flex;
-  flex-direction: row;
-}
-
-.flex-col {
-  display: flex;
-  flex-direction: column;
-
-  .header-nav {
-    height: 64px;
-
-    ul {
-      display: flex;
-      flex-direction: row;
-      margin: 0 36px;
-      padding: 0;
-
-      li {
-        list-style: none;
-        display: block;
-        width: 120px;
-        height: 64px;
-        line-height: 64px;
-        margin-right: 36px;
-
-        a {
-          text-decoration: none;
-        }
-      }
-    }
-  }
 }
