@@ -3,6 +3,7 @@ import { Col, Row } from 'antd'
 import type { FlattenedNode, TreeNode, TreeNodeRenderer } from '../components/VirtualizedTree'
 import VirtualizedTree from '../components/VirtualizedTree'
 import classnames from 'classnames'
+import { updateNodeExpanded, updateNodeSelection } from '../components/_TreeUtils'
 
 /**
  * 模拟数据
@@ -34,7 +35,7 @@ export function getTreeData(path = '0', level = 4, count = 5): TreeNode[] {
 export const defaultTreeData = getTreeData()
 
 export default function VirtualizedTreeExample() {
-    const [treeData, _setTreeData] = useState<TreeNode[]>(defaultTreeData)
+    const [treeData, setTreeData] = useState<TreeNode[]>(defaultTreeData)
 
     const treeHeight = 300
     const rowHeight = 30
@@ -50,7 +51,13 @@ export default function VirtualizedTreeExample() {
     }, [])
 
     const handleExpandClick = (node: FlattenedNode) => {
-        console.log('handleExpandClick', node)
+        const tree = updateNodeExpanded(treeData, node);
+        setTreeData(tree)
+    }
+
+    const handleCheckedClick = (node: FlattenedNode) => {
+        const tree = updateNodeSelection(treeData, node);
+        setTreeData(tree)
     }
 
     const treeNodeRenderer: TreeNodeRenderer = (node) => {
@@ -60,12 +67,16 @@ export default function VirtualizedTreeExample() {
             <div style={{height: rowHeight, paddingLeft: pl}}>
                 <span>
                     <input type="checkbox"
-                           onClick={() => handleExpandClick(node)}
+                           onClick={() => handleCheckedClick(node)}
+                           onChange={() => {
+                           }}
                            className={classnames(halfChecked && 'halfChecked')}
                            checked={checked}
                            disabled={disabled}/>
                 </span>
-                name: {node.name}
+                <span onClick={() => handleExpandClick(node)}>
+                  name: {node.name}
+                </span>
             </div>
         )
     }

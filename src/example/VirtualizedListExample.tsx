@@ -4,7 +4,7 @@ import type { RowInfo } from '../components/VirtualizedList'
 import VirtualizedList from '../components/VirtualizedList'
 
 export default function VirtualizedListExample() {
-    const list = new Array(1000).fill(0)
+    const list = new Array(10000).fill(0)
     const height = '300px'
     const rowHeight = 30
     const style: CSSProperties = {
