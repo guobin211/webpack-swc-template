@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'antd'
-import type { FlattenedNode, TreeNode, TreeNodeRenderer } from '../components/VirtualizedTree'
+import type { FlatNode, TreeNode, TreeNodeRenderer } from '../components/VirtualizedTree'
 import VirtualizedTree from '../components/VirtualizedTree'
 import classnames from 'classnames'
-import { updateNodeExpanded, updateNodeSelection } from '../components/_TreeUtils'
+import { updateNodeExpanded, updateNodeSelection } from '../components/BaseTreeUtils'
 
 /**
  * 模拟数据
@@ -50,12 +50,12 @@ export default function VirtualizedTreeExample() {
         }, 16)
     }, [])
 
-    const handleExpandClick = (node: FlattenedNode) => {
+    const handleExpandClick = (node: FlatNode) => {
         const tree = updateNodeExpanded(treeData, node);
         setTreeData(tree)
     }
 
-    const handleCheckedClick = (node: FlattenedNode) => {
+    const handleCheckedClick = (node: FlatNode) => {
         const tree = updateNodeSelection(treeData, node);
         setTreeData(tree)
     }

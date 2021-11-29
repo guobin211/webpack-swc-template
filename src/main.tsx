@@ -6,8 +6,8 @@ import pkg from '../package.json'
 const root = document.getElementById('root') as HTMLDivElement
 
 ReactDOM.render(
-    <React.Fragment>
+    <React.StrictMode>
         <App version={pkg.version}/>
-    </React.Fragment>,
+    </React.StrictMode>,
     root
 )

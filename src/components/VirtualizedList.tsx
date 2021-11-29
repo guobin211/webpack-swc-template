@@ -36,7 +36,7 @@ export interface RowInfo {
     isVisible: boolean;
 }
 
-export interface ListAction {
+export interface ListRef {
     /**
      * 滚动到指定行
      * @param index
@@ -44,7 +44,7 @@ export interface ListAction {
     scrollToIndex: (index: number) => void;
 }
 
-export default class VirtualizedList extends React.Component<ListProps> implements ListAction {
+export default class VirtualizedList extends React.PureComponent<ListProps> implements ListRef {
     listRef = React.createRef<List>();
 
     /**

@@ -8,9 +8,10 @@ function AppRouter() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<HomePage/>}/>
-                {ComponentsPage()}
+                <Route path="/" element={<PlaygroundPage/>}/>
                 <Route path="/playground" element={<PlaygroundPage/>}/>
+                <Route path="/home" element={<HomePage/>}/>
+                {ComponentsPage()}
             </Routes>
         </BrowserRouter>
     )
