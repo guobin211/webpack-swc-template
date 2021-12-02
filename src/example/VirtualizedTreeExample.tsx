@@ -1,68 +1,81 @@
-import React, { useEffect, useState } from 'react'
-import { Col, Row } from 'antd'
-import type { FlatNode, TreeNode, TreeNodeRenderer } from '../components/VirtualizedTree'
-import VirtualizedTree from '../components/VirtualizedTree'
-import classnames from 'classnames'
-import { updateNodeExpanded, updateNodeSelection } from '../components/BaseTreeUtils'
+import React, { useEffect, useState } from 'react';
+import { Col, Row } from 'antd';
+import VirtualizedTree from '../components/VirtualizedTree';
+import classnames from 'classnames';
+import type { TreeLikeData, TreeNode } from '../components/TreeData';
+
+export interface TreeConfig {
+    path: string,
+    level: number,
+    length: number,
+    checked: boolean,
+    expanded: boolean,
+    disabled: boolean,
+}
+
+const CONFIG = {
+    path: '0',
+    level: 3,
+    length: 3,
+    checked: false,
+    expanded: true,
+    disabled: false
+}
 
 /**
  * 模拟数据
  */
-export function getTreeData(path = '0', level = 4, count = 5): TreeNode[] {
-    const list: TreeNode[] = []
-    for (let i = 0; i < count; i += 1) {
-        const key = `${path}-${i}`
-        const treeNode: TreeNode = {
+export function getTreeData(config?: Partial<TreeConfig>): TreeLikeData[] {
+    const {path, level, length, checked, expanded, disabled} = Object.assign({}, CONFIG, config);
+    const list: TreeLikeData[] = [];
+    for (let i = 0; i < length; i += 1) {
+        const key = `${path}-${i}`;
+        const treeNode: TreeLikeData = {
             id: key,
             name: `name-${key}`,
             state: {
-                expanded: true,
-                checked: false,
-                disabled: false
-            },
-            children: []
-        }
-
+                checked,
+                disabled,
+                expanded: level === 0 ? false : expanded,
+            }
+        };
         if (level > 0) {
-            treeNode.children = getTreeData(key, level - 1, count)
+            treeNode.children = getTreeData({...config, level: level - 1, path: key});
         }
-
-        list.push(treeNode)
+        list.push(treeNode);
     }
-    return list
+    return list;
 }
 
-export const defaultTreeData = getTreeData()
+export const defaultTreeLikeData = getTreeData();
 
 export default function VirtualizedTreeExample() {
-    const [treeData, setTreeData] = useState<TreeNode[]>(defaultTreeData)
+    const [treeData] = useState<TreeNode[]>(defaultTreeLikeData);
 
-    const treeHeight = 300
-    const rowHeight = 30
-    const [count, setCount] = useState(20)
+    const treeHeight = 300;
+    const rowHeight = 30;
+    const [count, setCount] = useState(20);
 
     useEffect(() => {
         setTimeout(() => {
-            const dom = document.querySelector('div.ReactVirtualized__Grid__innerScrollContainer')
+            const dom = document.querySelector('div.ReactVirtualized__Grid__innerScrollContainer');
             if (dom) {
-                setCount(dom.children.length)
+                setCount(dom.children.length);
             }
-        }, 16)
-    }, [])
+        }, 16);
+    }, []);
 
-    const handleExpandClick = (node: FlatNode) => {
-        const tree = updateNodeExpanded(treeData, node);
-        setTreeData(tree)
-    }
+    const handleExpandClick = (node: TreeNode) => {
+        console.log(node);
+    };
 
-    const handleCheckedClick = (node: FlatNode) => {
-        const tree = updateNodeSelection(treeData, node);
-        setTreeData(tree)
-    }
+    const handleCheckedClick = (node: TreeNode) => {
+        console.log(node);
+    };
 
-    const treeNodeRenderer: TreeNodeRenderer = (node) => {
-        const pl = 20 * node.deepness
-        const {checked, disabled, halfChecked} = node.state || {}
+    const treeNodeRenderer = (node: any) => {
+        const pl = 20 * node.deepness;
+        const {checked, disabled, halfChecked} = node.state || {};
         return (
             <div style={{height: rowHeight, paddingLeft: pl}}>
                 <span>
@@ -78,8 +91,8 @@ export default function VirtualizedTreeExample() {
                   name: {node.name}
                 </span>
             </div>
-        )
-    }
+        );
+    };
 
     return (
         <Row>
@@ -95,5 +108,5 @@ export default function VirtualizedTreeExample() {
                 <VirtualizedTree treeData={treeData} treeHeight={treeHeight} treeNodeRenderer={treeNodeRenderer}/>
             </Col>
         </Row>
-    )
+    );
 }

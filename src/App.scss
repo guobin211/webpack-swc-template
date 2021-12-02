@@ -1,4 +1,5 @@
 @import '../node_modules/antd/dist/antd.css';
+@import './components/VirtualizedTree.scss';
 
 html {
   font-size: 16px;
@@ -7,8 +8,4 @@ html {
 body {
   margin: 0;
   padding: 0;
-}
-
-div.halfChecked {
-  background-color: #00bc96;
 }

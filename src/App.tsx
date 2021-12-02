@@ -3,7 +3,7 @@ import './App.scss'
 import { Provider } from 'react-redux'
 import AppRouter from './router'
 import store from './redux/store'
-import { defineGlobalProperty } from './common/defineGlobalProperty'
+import GlobalDefinition from './common/GlobalDefinition'
 
 export interface AppProps {
     version: string;
@@ -11,7 +11,9 @@ export interface AppProps {
 
 function App(props: AppProps) {
     useEffect(() => {
-        defineGlobalProperty('AppProps', props)
+        GlobalDefinition.set('AppProps', props)
+        const value = GlobalDefinition.get<AppProps>('AppProps')
+        console.assert(value === props, 'AppProps is not equal');
     }, [])
     return (
         <Provider store={store}>
