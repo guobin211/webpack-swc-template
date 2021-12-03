@@ -21,9 +21,18 @@ export default class VirtualizedTree extends React.Component<TreeProps, TreeStat
         super(props);
         this.cache = new TreeCache(props.treeData);
         this.state = {
+            checkedKeys: [],
+            expandedKeys: [],
+            flattenNodes: [],
+            halfCheckedKeys: [],
+            loadedKeys: [],
+            loadingKeys: [],
+            selectedKeys: [],
+            treeData: [],
             pathInfoList: this.cache.pathInfos,
             isLoading: true,
-            selectedNodes: []
+            selectedNodes: [],
+            prevProps: props
         };
     }
 

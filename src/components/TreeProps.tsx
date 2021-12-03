@@ -101,8 +101,20 @@ export interface TreeRef extends TreeRenderer {
 }
 
 export interface TreeState {
-    pathInfoList: PathInfo[];
     isLoading: boolean;
+    pathInfoList: PathInfo[];
     selectedNodes: TreeNode[];
+
+    selectedKeys: string[];
+    checkedKeys: string[];
+    halfCheckedKeys: string[];
+    loadedKeys: string[];
+    loadingKeys: string[];
+    expandedKeys: string[];
+
+    treeData: TreeNode[];
+    flattenNodes: FlatNode[];
+
+    prevProps: TreeProps;
 }
 
