@@ -1,71 +1,71 @@
 import type { PathInfo } from './TreeCache';
 
 export interface TreeLikeData {
-    id: string;
-    children?: TreeLikeData[];
-    [key: string]: any;
+  id: string;
+  children?: TreeLikeData[];
+  [key: string]: any;
 }
 
 /**
  * 树UI状态
  */
 export interface TreeNodeState {
-    /**
+  /**
      * 子节点选中的数量
      */
-    checkedNum?: number;
-    /**
+  checkedNum?: number;
+  /**
      * 展开
      */
-    expanded?: boolean;
-    /**
+  expanded?: boolean;
+  /**
      * 选中
      */
-    checked?: boolean;
-    /**
+  checked?: boolean;
+  /**
      * 是否半选中
      */
-    halfChecked?: boolean;
-    /**
+  halfChecked?: boolean;
+  /**
      * 禁止选中
      * 添加`disable`类名
      */
-    disabled?: boolean;
+  disabled?: boolean;
 }
 
 /**
  * 树节点数据
  */
 export interface TreeNode {
-    /**
+  /**
      * 节点ID
      */
-    id: string;
-    /**
+  id: string;
+  /**
      * 树UI状态
      */
-    state?: TreeNodeState;
-    /**
+  state?: TreeNodeState;
+  /**
      * 子节点
      */
-    children?: TreeNode[];
+  children?: TreeNode[];
 
-    [key: string]: any;
+  [key: string]: any;
 }
 
 export interface FlatNode extends TreeNode {
-    children?: FlatNode[];
-    state: TreeNodeState;
-    /**
+  children?: FlatNode[];
+  state: TreeNodeState;
+  /**
      * 快速访问index
      */
-    paths: PathInfo;
-    /**
+  paths: PathInfo;
+  /**
      * 虚拟列表index
      */
-    index: number;
-    /**
+  index: number;
+  /**
      * 树深度
      */
-    depth: number;
+  depth: number;
 }

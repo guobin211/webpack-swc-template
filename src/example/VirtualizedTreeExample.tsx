@@ -73,7 +73,7 @@ export default function VirtualizedTreeExample() {
         console.log(node);
     };
 
-    const treeNodeRenderer = (node: any) => {
+    const renderNodeContent = (node: any) => {
         const pl = 20 * node.deepness;
         const {checked, disabled, halfChecked} = node.state || {};
         return (
@@ -105,7 +105,7 @@ export default function VirtualizedTreeExample() {
                 <h1>VirtualTree</h1>
                 <h1>数据长度 {treeData.length}</h1>
                 <h1>节点数量 {count} = (height / rowHeight) * 2</h1>
-                <VirtualizedTree treeData={treeData} treeHeight={treeHeight} treeNodeRenderer={treeNodeRenderer}/>
+                <VirtualizedTree treeData={treeData} treeHeight={treeHeight} renderNodeContent={renderNodeContent}/>
             </Col>
         </Row>
     );

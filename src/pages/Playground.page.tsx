@@ -41,6 +41,12 @@ function PlaygroundPage() {
         })
     }
 
+    const renderNodeContent = (flatNode: any) => {
+      return (
+          <span>{flatNode.node.id}</span>
+      )
+    }
+
     return (
         <Layout>
             <Content>
@@ -51,7 +57,7 @@ function PlaygroundPage() {
                                      isLazyNode={isLazyNode}
                                      loadData={loadData}
                                      showNodeLoading={true}
-                                     treeNodeRenderer={treeNodeRenderer}/>
+                                     renderNodeContent={renderNodeContent}/>
                 </div>
             </Content>
         </Layout>
