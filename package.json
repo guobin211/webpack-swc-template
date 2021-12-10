@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "webpack serve --config scripts/webpack.dev.mjs",
-    "build:prod": "webpack --config scripts/webpack.prod.mjs",
+    "build": "webpack --config scripts/webpack.prod.mjs",
     "build:test": "webpack --config scripts/webpack.test.mjs",
     "test": "",
     "ssg": ""

@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
-import type { AnyElement, IsLazyNode, LoadData, TreeRendererProps } from './TreeProps';
-import type { FlatNode } from './TreeData';
 import React, { CSSProperties, useState } from 'react';
-import { mergeClasses } from './TreeStyleUtils';
 import { updateChildrenNodeState } from './TreeCache';
+import type { FlatNode } from './TreeData';
+import type { AnyElement, IsLazyNode, LoadData, TreeRendererProps } from './TreeProps';
+import { mergeClasses } from './TreeStyleUtils';
 
 export interface SelectionProps extends TreeRendererProps {
   handleSelectClick: (node: FlatNode) => void;
@@ -26,25 +26,25 @@ export const TreeSelection: React.FC<SelectionProps> = (props) => {
   const className = mergeClasses('tree-icon', 'selection', {
     none: !checked && !halfChecked,
     half: halfChecked,
-    all: checked,
+    all: checked
   }, props.className);
 
   const handleClick = () => {
     const updateState = {
       ...node.state,
       checked: !checked,
-      halfChecked: false,
+      halfChecked: false
     };
     const updateNode = {
       ...node,
-      state: updateState,
+      state: updateState
     };
     handleSelectClick(updateNode);
   };
 
   return (
-      <span className={ className } style={ style } onClick={ handleClick }>
-            { props.children }
+    <span className={className} style={style} onClick={handleClick}>
+            {props.children}
         </span>
   );
 };
@@ -70,7 +70,7 @@ export const TreeExpanded: React.FC<ExpandedProps> = (props) => {
   const className = mergeClasses('tree-icon', 'expanded', {
     close: canLoadChildren && !expanded,
     open: canLoadChildren && expanded,
-    loading,
+    loading
   }, props.className);
 
   const handleClick = () => {
@@ -82,8 +82,8 @@ export const TreeExpanded: React.FC<ExpandedProps> = (props) => {
         ...node,
         state: {
           ...node.state,
-          expanded: !expanded,
-        },
+          expanded: !expanded
+        }
       };
       if (hasChildren) {
         handleExpandClick(update);
@@ -104,8 +104,8 @@ export const TreeExpanded: React.FC<ExpandedProps> = (props) => {
   };
 
   return (
-      <span data-index={ index } className={ className } style={ style } onClick={ handleClick }>
-            { props.children }
+    <span data-index={index} className={className} style={style} onClick={handleClick}>
+            {props.children}
         </span>
   );
 };
@@ -119,11 +119,11 @@ export interface TreeLoadingProps {
 export const TreeLoading = (props: TreeLoadingProps) => {
   const { isLoading, className, style } = props;
   return (
-      <div className={ mergeClasses('tree-loading', { show: isLoading }, className) } style={ style }>
-        <div className={ mergeClasses('tree-loading-content') }>
-          <h1>Loading</h1>
-        </div>
+    <div className={mergeClasses('tree-loading', { show: isLoading }, className)} style={style}>
+      <div className={mergeClasses('tree-loading-content')}>
+        <h1>Loading</h1>
       </div>
+    </div>
   );
 };
 

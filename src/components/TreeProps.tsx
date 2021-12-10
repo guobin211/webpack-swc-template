@@ -1,7 +1,6 @@
-import type { FlatNode, TreeLikeData, TreeNode } from './TreeData';
-import type React from 'react';
+import type React, { CSSProperties } from 'react';
 import type { PathInfo } from './TreeCache';
-import type { CSSProperties } from 'react';
+import type { FlatNode, TreeLikeData, TreeNode } from './TreeData';
 
 export type AnyElement = React.ReactNode | JSX.Element;
 
@@ -23,7 +22,7 @@ export type LoadData = (node: FlatNode) => Promise<TreeNode[]>;
 
 export type LoadingElement<T = undefined> = (node: T) => AnyElement;
 
-export type CustomNodeRenderer<T extends TreeRendererProps> = (props: T) => AnyElement;
+export type CustomNodeRenderer<T extends TreeRendererProps = any> = (props: T) => AnyElement;
 
 export interface TreeRendererProps {
   readonly isScrolling: boolean;
