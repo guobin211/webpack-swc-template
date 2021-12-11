@@ -6,7 +6,7 @@ import { getTreeData } from '../example/VirtualizedTreeExample';
 
 const { Content } = Layout;
 console.time('getTreeData');
-const tree = getTreeData({ expanded: true, level: 2, length: 10 });
+const tree = getTreeData({ expanded: false, level: 2, length: 2 });
 console.timeEnd('getTreeData');
 
 function PlaygroundPage() {
@@ -30,7 +30,7 @@ function PlaygroundPage() {
   }, [treeRef.current]);
 
   const isLazyNode = () => {
-    return true;
+    return false;
   };
 
   const loadData = () => {

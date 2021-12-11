@@ -176,9 +176,9 @@ export class TreeCache {
 export function getLastNode(node: TreeNode): TreeNode[] {
   const res: TreeNode[] = [];
   if (node.children && node.children.length > 0) {
-    node.children.forEach((child) => {
-      res.push(...getLastNode(child));
-    });
+    node.children.reduce((prev, curr) => {
+      return prev.concat(getLastNode(curr));
+    }, res);
   } else {
     res.push(node as any);
   }
@@ -191,7 +191,7 @@ export function getLastNode(node: TreeNode): TreeNode[] {
  * @param parents
  */
 export function normalizeTreeNodes<T extends TreeLikeData>(tree: T[], parents: string[] = []): Array<TreeNode & T> {
-  return tree.map((node) => {
+  return tree.map(node => {
     const { children, state } = node;
     const treeNode: TreeNode & T = {
       ...node,
@@ -248,10 +248,10 @@ export function getFlattenedTreePathsAndParent(
       res.parents.push(parents.concat(node.id));
       res.paths.push(path.concat(index));
       const subTree = getFlattenedTreePathsAndParent(node.children!, parents.concat(node.id), path.concat(index));
-      subTree.parents.forEach((p) => {
+      subTree.parents.forEach(p => {
         res.parents.push(p);
       });
-      subTree.paths.forEach((p) => {
+      subTree.paths.forEach(p => {
         res.paths.push(p);
       });
     } else {
@@ -299,7 +299,7 @@ export function getFlattenedTreePaths(tree: TreeLikeData[], pathInfo: PathInfo =
     if (nodeHasChildren(node) && isNodeExpanded(node)) {
       paths.push(pathInfo.concat(index));
       const nextPathInfo = getFlattenedTreePaths(node.children!, pathInfo.concat(index));
-      nextPathInfo.forEach((p) => {
+      nextPathInfo.forEach(p => {
         paths.push(p);
       });
     } else {
