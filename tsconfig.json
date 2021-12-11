@@ -19,14 +19,20 @@
     "jsx": "react",
     "module": "esnext",
     "useDefineForClassFields": true,
-    "declaration": false
+    "declaration": false,
+    "rootDir": "src"
   },
   "ts-node": {
     "compilerOptions": {
       "module": "commonjs"
     }
   },
+  "include": [
+    "src"
+  ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "dist",
+    "build"
   ]
 }
