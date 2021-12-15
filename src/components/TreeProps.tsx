@@ -1,4 +1,5 @@
-import type React, { CSSProperties } from 'react';
+import type React from 'react';
+import type { CSSProperties } from 'react';
 import type { PathInfo } from './TreeCache';
 import type { FlatNode, TreeLikeData, TreeNode } from './TreeData';
 
@@ -156,4 +157,3 @@ export interface TreeState {
 
   prevProps: TreeProps;
 }
-

@@ -48,4 +48,3 @@ console.log('findByPath', result);
 console.log(result.id);
 
 console.log(tree[0].children[1]);
-
