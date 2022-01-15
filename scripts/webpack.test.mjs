@@ -18,27 +18,21 @@ const testConfig = merge(devConfig, {
     sourceMapFilename: 'webpack/js/[name].map',
     path: DIST_PATH,
     clean: true,
-    publicPath: '/'
+    publicPath: '/',
   },
   optimization: {
-    minimizer: [
-      new CssMinimizerPlugin()
-    ]
+    minimizer: [new CssMinimizerPlugin()],
   },
   module: {
-    rules: [
-      ...getCssLoader(MODE),
-      ...getAssetsLoader(MODE),
-      getTsxLoader()
-    ]
+    rules: [...getCssLoader(MODE), ...getAssetsLoader(MODE), getTsxLoader()],
   },
   plugins: [
     new MiniCssExtractPlugin({
       filename: 'webpack/css/[name].[contenthash].css',
-      chunkFilename: 'webpack/css/[id].[contenthash].css'
-    })
+      chunkFilename: 'webpack/css/[id].[contenthash].css',
+    }),
   ],
-  devServer: {}
+  devServer: {},
 });
 
 export default testConfig;

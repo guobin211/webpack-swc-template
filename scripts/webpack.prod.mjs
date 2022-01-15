@@ -17,10 +17,10 @@ const prodConfig = merge(devConfig, {
     filename: 'webpack/js/[name].[contenthash].js',
     path: DIST_PATH,
     clean: true,
-    publicPath: '/'
+    publicPath: '/',
   },
   performance: {
-    maxEntrypointSize: 300000
+    maxEntrypointSize: 300000,
   },
   optimization: {
     splitChunks: {
@@ -28,34 +28,28 @@ const prodConfig = merge(devConfig, {
         commons: {
           test: /[\\/]node_modules[\\/](react|react-dom|react-router-dom|redux|react-redux)[\\/]/,
           name: 'commons',
-          chunks: 'all'
+          chunks: 'all',
         },
         vendor: {
           test: /[\\/]node_modules[\\/]/,
           name: 'vendor',
-          chunks: 'all'
-        }
-      }
+          chunks: 'all',
+        },
+      },
     },
     runtimeChunk: 'single',
-    minimizer: [
-      new CssMinimizerPlugin()
-    ]
+    minimizer: [new CssMinimizerPlugin()],
   },
   module: {
-    rules: [
-      ...getCssLoader(MODE),
-      ...getAssetsLoader(MODE),
-      getTsxLoader()
-    ]
+    rules: [...getCssLoader(MODE), ...getAssetsLoader(MODE), getTsxLoader()],
   },
   plugins: [
     new MiniCssExtractPlugin({
       filename: 'webpack/css/[name].[contenthash].css',
-      chunkFilename: 'webpack/css/[id].[contenthash].css'
-    })
+      chunkFilename: 'webpack/css/[id].[contenthash].css',
+    }),
   ],
-  devServer: {}
+  devServer: {},
 });
 
 export default prodConfig;

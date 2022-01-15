@@ -1,36 +1,48 @@
-import { Action, createStore } from 'redux'
-import type { Reducer } from 'react'
+import { applyMiddleware, createStore, Reducer } from 'redux';
+import { AppActions, AppActionType } from './actions';
+import { AppState, AppStateKey, DEFAULT_STATE } from './state';
+import getMiddleWares from './middleware';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
-export interface ReduxState {
-  count: number
-}
+/**
+ * reducer
+ * 1. 重置状态
+ * 2. 修改一个属性，类似localstorage.setItem
+ * @returns {AppState}
+ */
+export const rootReducer: Reducer<AppState, AppActions> = (state, action): AppState => {
+  if (!state) {
+    return DEFAULT_STATE;
+  }
+  const { type, payload } = action;
 
-const initialState: ReduxState = {
-  count: 0
-}
-
-export interface CountAction extends Action {
-    type: 'INCREMENT' |  'DECREMENT',
-    payload: any,
-}
-
-const countReducer: Reducer<any, any> = (state: ReduxState, action: CountAction) => {
-    switch (action.type) {
-        case 'INCREMENT':
-            return {
-                ...state,
-                count: state.count + 1
-            }
-        case 'DECREMENT':
-            return {
-                ...state,
-                count: state.count - 1
-            }
-        default:
-            return state;
+  function changeStateByPayload(state: AppState, payload: Record<string, any>): AppState {
+    if (payload) {
+      const entries = Object.entries(payload);
+      if (entries.length) {
+        const [key, value] = entries[0] as [AppStateKey, any];
+        if (key && state[key] === value) {
+          return state;
+        }
+        return {
+          ...state,
+          ...payload,
+        };
+      }
     }
-}
+    return state;
+  }
 
-const store = createStore(countReducer, initialState)
+  switch (type) {
+    case AppActionType.RESET:
+      return DEFAULT_STATE;
+    case AppActionType.SET:
+      return changeStateByPayload(state, payload);
+    default:
+      return state;
+  }
+};
 
-export default store
+const store = createStore(rootReducer, DEFAULT_STATE, composeWithDevTools(applyMiddleware(...getMiddleWares())));
+
+export default store;

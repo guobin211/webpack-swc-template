@@ -1,21 +1,17 @@
-import { useEffect, useState } from 'react';
-import store from '../redux/store';
+import { useCallback, useEffect, useState } from 'react';
 
-export function useCount(): [number, () => void, () => void,] {
-  const [count, setCount] = useState(store.getState().count);
+export function useCount(): [number, () => void, () => void] {
+  const [count, setCount] = useState(0);
 
-  useEffect(() => {
-    const unsub = store.subscribe(() => {
-      setCount(store.getState().count);
-    });
-    return () => {
-      unsub();
-    };
-  }, []);
+  const add = useCallback(() => {
+    setCount(count + 1);
+  }, [count]);
 
-  return [
-    count,
-    () => store.dispatch({ type: 'INCREMENT' }),
-    () => store.dispatch({ type: 'DECREMENT' })
-  ];
+  const sub = useCallback(() => {
+    setCount(count - 1);
+  }, [count]);
+
+  useEffect(() => {}, []);
+
+  return [count, add, sub];
 }

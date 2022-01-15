@@ -1,9 +1,18 @@
-const people = [{ id: 1, name: 'Jack' }, { id: 2, name: 'Sally' }, { id: 3, name: 'Joe' }];
+/* eslint-disable no-param-reassign */
+const people = [
+  { id: 1, name: 'Jack' },
+  { id: 2, name: 'Sally' },
+  { id: 3, name: 'Joe' },
+];
 
 console.time('object.desc');
-people.reduce((lookup, person) => ({
-  ...lookup, [person.id]: person
-}), {});
+people.reduce(
+  (lookup, person) => ({
+    ...lookup,
+    [person.id]: person,
+  }),
+  {},
+);
 console.timeEnd('object.desc');
 
 console.time('object.set');

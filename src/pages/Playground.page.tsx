@@ -1,64 +1,33 @@
 import { Layout } from 'antd';
-import React, { useEffect, useRef, useState } from 'react';
-import type { TreeLikeData, TreeNode } from '../components/TreeData';
-import VirtualizedTree from '../components/VirtualizedTree';
-import { getTreeData } from '../example/VirtualizedTreeExample';
+import React, { ChangeEvent, useState } from 'react';
+import Header from '../components/Header';
+import useUserState from '../hooks/useUserState';
 
 const { Content } = Layout;
-console.time('getTreeData');
-const tree = getTreeData({ expanded: false, level: 2, length: 2 });
-console.timeEnd('getTreeData');
 
 function PlaygroundPage() {
-  const [treeData] = useState<TreeNode[]>(tree);
+  const [user, setUser] = useUserState();
 
-  const treeHeight = 300;
-  const treeRef = useRef(null);
+  const [nickname, setNickname] = useState(user?.nickname || '');
 
-  const treeNodeRenderer = () => {
-    return (
-      <span>treeNodeRenderer</span>
-    );
+  const handleChange = (ev: ChangeEvent<HTMLInputElement>) => {
+    setNickname(ev.target.value);
   };
 
-  useEffect(() => {
-    console.time('treeRef');
-    if (treeRef.current) {
-      console.log(treeRef.current);
-      console.timeEnd('treeRef');
-    }
-  }, [treeRef.current]);
-
-  const isLazyNode = () => {
-    return false;
-  };
-
-  const loadData = () => {
-    return new Promise<TreeLikeData[]>(resolve => {
-      setTimeout(() => {
-        resolve(getTreeData({ path: '0-0-0', expanded: false, level: 0, length: 2 }));
-      }, 1000);
+  const handleSubmit = () => {
+    setUser({
+      nickname,
     });
-  };
-
-  const renderNodeContent = (flatNode: any) => {
-    return (
-      <span>{flatNode.node.id}</span>
-    );
   };
 
   return (
     <Layout>
       <Content>
-        <div style={{ height: treeHeight, width: 500, margin: '0 auto' }}>
-          <VirtualizedTree ref={treeRef}
-                           treeData={treeData}
-                           treeHeight={treeHeight}
-                           isLazyNode={isLazyNode}
-                           loadData={loadData}
-                           showNodeLoading={true}
-                           renderNodeContent={renderNodeContent}/>
-        </div>
+        <Header />
+        <input style={{ height: '36px' }} type="text" value={nickname} onChange={handleChange} />
+        <button onClick={handleSubmit} type="button" style={{ width: '200px', height: '36px' }}>
+          修改
+        </button>
       </Content>
     </Layout>
   );

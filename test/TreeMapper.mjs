@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * 平铺树
  * @param tree
@@ -6,12 +7,14 @@
  */
 export function flatten(tree, path = []) {
   let pathList = [];
-  let node, currentPath, nextPathList;
+  let node;
+  let currentPath;
+  let nextPathList;
   for (let i = 0; i < tree.length; i++) {
     node = tree[i];
     currentPath = path.concat(i);
     if (node.children && node.children.length) {
-      nextPathList = this.flatten(node.children, currentPath);
+      nextPathList = flatten(node.children, currentPath);
       pathList = pathList.concat(nextPathList);
     } else {
       pathList.push(currentPath);
@@ -43,17 +46,26 @@ export function removeChildPath(pathList, pathIndex, childLength) {
   return pathList.splice(pathIndex, childLength);
 }
 
-
 export class TreeMapper {
   constructor(tree) {
     this.tree = tree;
     this.pathList = flatten(tree);
   }
 
-  normalize(tree, treeProps) { }
+  normalize(tree, treeProps) {
+    for (let i = 0; i < tree.length; i++) {
+      const node = tree[i];
+      if (node.children && node.children.length) {
+        this.normalize(node.children, treeProps);
+      }
+      if (treeProps) {
+        node.state = {};
+      }
+    }
+  }
 
   /**
-   * @param updateNode {FlatNode}
+   * @param updateNode {object}
    */
   updateNodeSelection(updateNode) {
     if (updateNode.children && updateNode.children.length) {

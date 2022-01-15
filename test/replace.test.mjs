@@ -1,12 +1,10 @@
 /**
  * @type {number[]}
  */
-const dataList = new Array(1000)
-  .fill('0')
-  .reduce((prev, _, index) => {
-    prev.push(index);
-    return prev;
-  }, []);
+const dataList = new Array(1000).fill('0').reduce((prev, _, index) => {
+  prev.push(index);
+  return prev;
+}, []);
 
 const pathIndex = 100;
 const pathIndexChildren = [-1, -2, -3, -4, -5];
@@ -27,6 +25,7 @@ function getPrevList(list, index) {
   }
   return resList;
 }
+console.log(getPrevList);
 
 /**
  * 添加

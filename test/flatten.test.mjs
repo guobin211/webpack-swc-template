@@ -1,3 +1,4 @@
+/* eslint-disable */
 let length = 0;
 
 export function generate(config = { parent: '0', length: 1000, depth: 1 }) {
@@ -5,13 +6,16 @@ export function generate(config = { parent: '0', length: 1000, depth: 1 }) {
   for (let i = 0; i < config.length; i++) {
     length++;
     const node = {
-      id: `${config.parent}-${i}`, state: {
-        expanded: config.depth > 0
-      }
+      id: `${config.parent}-${i}`,
+      state: {
+        expanded: config.depth > 0,
+      },
     };
     if (config.depth > 0) {
       node.children = generate({
-        parent: node.id, length: config.length, depth: config.depth - 1
+        parent: node.id,
+        length: config.length,
+        depth: config.depth - 1,
       });
     }
     res.push(node);
@@ -29,10 +33,10 @@ console.timeEnd('generate');
  * @return {*}
  */
 function getFlattenIds(treeNodes) {
-  return treeNodes.reduce(function (cur, node) {
+  return treeNodes.reduce((cur, node) => {
     cur.push([node.id]);
     if (node.children && node.children.length && node.state.expanded) {
-      for (let subPath of getFlattenIds(node.children)) {
+      for (const subPath of getFlattenIds(node.children)) {
         cur.push(subPath);
       }
       return cur;
@@ -55,11 +59,11 @@ console.timeEnd('flatten');
  */
 function getFlattenIdPath(treeNodes, parents = []) {
   const res = [];
-  treeNodes.forEach(node => {
+  treeNodes.forEach((node) => {
     const currentPath = parents.concat(node.id);
     res.push(currentPath);
     if (node.children && node.children.length && node.state.expanded) {
-      getFlattenIdPath(node.children, currentPath).forEach(path => {
+      getFlattenIdPath(node.children, currentPath).forEach((path) => {
         res.push(path);
       });
     }
@@ -84,7 +88,8 @@ function getFlattenInfoNodes(treeNodes, pathInfo = { parents: '', paths: '' }) {
   for (let i = 0; i < treeNodes.length; i++) {
     const node = treeNodes[i];
     const current = {
-      parents: `${pathInfo.parents}-${node.id}`, paths: `${pathInfo.paths}-${i}`
+      parents: `${pathInfo.parents}-${node.id}`,
+      paths: `${pathInfo.paths}-${i}`,
     };
     flatNodes.push(current);
     if (node.children && node.children.length && node.state.expanded) {

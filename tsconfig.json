@@ -20,7 +20,7 @@
     "module": "esnext",
     "useDefineForClassFields": true,
     "declaration": false,
-    "rootDir": "src"
+    "outDir": "./dist"
   },
   "ts-node": {
     "compilerOptions": {
@@ -28,7 +28,9 @@
     }
   },
   "include": [
-    "src"
+    "src",
+    "scripts",
+    "test"
   ],
   "exclude": [
     "node_modules",

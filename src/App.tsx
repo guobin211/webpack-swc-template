@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
-import { Provider } from 'react-redux';
 import './App.scss';
-import GlobalDefinition from './common/GlobalDefinition';
+import WindowState from './common/WindowState';
 import store from './redux/store';
 import AppRouter from './router';
 
@@ -10,16 +9,25 @@ export interface AppProps {
 }
 
 function App(props: AppProps) {
+  function initState() {
+    WindowState.set('AppProps', props);
+    WindowState.set('AppState', store.getState());
+  }
+
   useEffect(() => {
-    GlobalDefinition.set('AppProps', props);
-    const value = GlobalDefinition.get<AppProps>('AppProps');
-    console.assert(value === props, 'AppProps is not equal');
+    const subs = store.subscribe(() => {
+      WindowState.set('AppState', store.getState());
+    });
+    return () => {
+      subs();
+    };
+  }, [props]);
+
+  useEffect(() => {
+    initState();
+    console.log('initState', WindowState.getState());
   }, []);
-  return (
-    <Provider store={store}>
-      <AppRouter/>
-    </Provider>
-  );
+  return <AppRouter />;
 }
 
 export default App;

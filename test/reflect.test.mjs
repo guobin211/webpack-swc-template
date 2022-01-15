@@ -5,9 +5,11 @@ function getTree() {
   for (let i = 0; i < 3; i++) {
     treeList.push({
       id: `0-${i}`,
-      children: [{
-        id: `0-${i}-0`
-      }]
+      children: [
+        {
+          id: `0-${i}-0`,
+        },
+      ],
     });
   }
   return treeList;

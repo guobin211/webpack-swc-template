@@ -1,0 +1,14 @@
+node_modules
+static
+lib
+es
+build
+dist
+cache
+pkg
+target
+doc
+
+.eslintrc.js
+*.config.js
+*.d.ts
