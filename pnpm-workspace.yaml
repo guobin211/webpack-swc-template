@@ -1,0 +1,7 @@
+packages:
+  - 'api/**'
+  - 'apps/**'
+  - 'components/**'
+  - 'packages/**'
+  # exclude packages that are inside test directories
+  - '!**/test/**'
